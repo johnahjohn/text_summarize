@@ -1,0 +1,42 @@
+artifacts_root: artifacts
+
+
+data_ingestion:
+  root_dir: artifacts/data_ingestion
+  # source_URL: https://textsummarizerdataset1.s3.eu-north-1.amazonaws.com/data.zip
+  source_URL: https://textsummarizerdataset1.s3.eu-north-1.amazonaws.com/data.zip?response-content-disposition=inline&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Security-Token=IQoJb3JpZ2luX2VjELr%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCmV1LW5vcnRoLTEiRzBFAiEAhbtz3c2CZh12LGCea4M7Lgv5khPxaHOz4eYiEGykohYCIB7TqfrDXUiATTaRnJBJvvjcGUmZe5%2F7TmtgGHYiPWsgKtADCLP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNDQ1NTY3MTAwMTg0IgxuuzNIRmuDmwx%2FULoqpAORE7lGO92qxL3TSRfwgjzaO5fUTnh%2B%2FHDfZYS5dWL82oLpIzzLmWdQjhoAOCiv%2FBQcxKtHQvA2MBhYpu%2FpUThVOU%2FEmd9PXaLdk5D0TTWLQuT4z8P64i1unTFusBmdTtwazQbOkg97yNKP0kRb0QOFbzdYk0BGgACk3g5rltXdrDjwzIT7JwwydkVFSBTrda8Ysm3V5V7mna9OW9diK0MhvNipUQJXN5O8il6VNQ5sXggYjwkEB90iraJ8QT6jtmlzt1OdGsN2Yyrfm6q%2BAJhSUQha7ja6PM9Dfa5eQCBq7stui3LgVrmO9lylOldUQ63LA%2Fqh5FkgOEZKx%2BPD7nJCLTfnVUprge6DJo%2F3hL9P7qdVK9iOUKDbH8XyEJtVdeL0lAGZx2D%2BEGYQ8hoCkjclCk6SdHBI9DFTYsgKHCr%2F08ARSrznuh383DZyJlTPgg%2FpHzHJG9jABbtH7ZzO2C5OPU6x9MDKUqI8cYMEZYrG5uXNr3oMC26WsCcAk0Qk4YSzInplSl0mGTBmT846bfGEuvWwtefHsqZxLIh%2Fm216YH6SjYsw0t27vAY65AIvKZVMWWnK1pjPq%2FuMg4LJHzYVVcjY2zS1iOFqTQeaKHSBITTeoL9YrV8b3Aw2BfZwSzw7hKgza2RLTCvBAH8VJ1nwFmfnprA9Ou5FRNfi9KB0JYkjf5q0lorrDjs3TjOE50AtfiVlrlh2%2Fy8sVIxAtbai%2Fmzf5117GWQkXeGHi%2FjOAU7MuOm3x8mDvS4YI25bv1NqZxzrEyQr0ThG0tZkkxLMHhQTZdVWaC70CI%2FUfohO7LLEfJnrZRQsEZBC3x4U%2BI3tEKf6ux%2BXSo%2FNtSnviQ%2F047V8ovcneCXr5I6nTsdQHZGxD%2B7En5CnQLXcF58mqXoIjW1ihCxNkEqTxlTl0OuCskAZPFK7L44S404hSQGVH%2BvCVl5cO1Ekv4n9SWBJWptJbhZ4KPCPBpTWqLzlm0JvMXfPEq55n9ICMqNx40qI9G3eE6hGErHAYAncA%2BxtLPa2HGef7NWbIyQ7tf%2BFglTvrA%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAWPPO6MUMAVJSLZT5%2F20250121%2Feu-north-1%2Fs3%2Faws4_request&X-Amz-Date=20250121T014724Z&X-Amz-Expires=600&X-Amz-SignedHeaders=host&X-Amz-Signature=cfb2c3885657d72afb4cee79fee723072d18fb0cc4a55e5731ed001bc52d16bc
+  local_data_file: artifacts/data_ingestion/data.zip
+  unzip_dir: artifacts/data_ingestion
+
+
+
+data_validation:
+  root_dir: artifacts/data_validation
+  STATUS_FILE: artifacts/data_validation/status.txt
+  ALL_REQUIRED_FILES: ["train", "test", "validation"]
+
+
+
+data_transformation:
+  root_dir: artifacts/data_transformation
+  data_path: artifacts/data_ingestion/samsum_dataset
+  tokenizer_name: google/pegasus-cnn_dailymail
+
+
+
+model_trainer:
+  root_dir: artifacts/model_trainer
+  data_path: artifacts/data_transformation/samsum_dataset
+  model_ckpt: google/pegasus-cnn_dailymail
+
+
+
+
+model_evaluation:
+  root_dir: artifacts/model_evaluation
+  data_path: artifacts/data_transformation/samsum_dataset
+  model_path: artifacts/model_trainer/pegasus-samsum-model/checkpoint-51
+  tokenizer_path: artifacts/model_trainer/tokenizer
+  metric_file_name: artifacts/model_evaluation/metrics.csv
+
+
